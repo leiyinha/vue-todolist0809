@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TODOLIST</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="content" id="app">
+        <div class="top">
+            <h1>Vue Todo</h1>
+            <p>添加任务，管理每日计划</p>
+        </div>
+        
+        <div class="row middle">
+            <div class="col-md-9">
+                <input type="text" class="form-control" placeholder="今天计划完成什么?" v-model="inputValue">
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary" @click="handleBtnClick">添加任务</button>
+            </div>
+          </div>
+        <div class="bottom" >
+
+            <div class="row row1">
+                <div class="col-md-9">任务列表</div>
+                <div class="col-md-3">
+                    <div class="row" >
+                        <div  v-for="(item,key,index) in sign" :key = "index" class="col-xs-4 " @click="handleDivClick(index)" :class="{active:active===index}">{{item}}</div>
+                    </div>
+                </div>
+            </div>
+            <div  v-if="active === 0">
+                <div class="row2" >
+                    <ul>
+                        <li v-for="(item,index) in list">
+                            <div class="content_left">
+                                    <span  :class="{green:item.status==='已完成'}">{{item.status}}</span>
+                                    <span>{{item.content}}</span>
+                            </div>
+                            <div class="content_right">   
+                                    <span class="one two" @click="handleAlready(index)" ><i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i></span>
+                                    <span class="one"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></span>
+                                    <span class=" one one1" @click="handleDelete"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></span>
+                            </div>
+                            <!-- <div class="dingwei">   -->
+                            
+                          <!-- </div> -->
+                        </li>
+                        <div class="clear"></div>
+                    </ul>
+                </div>
+                <div class=" row3">
+                    <p>共{{list.length}}项任务</p>
+                </div>
+            </div>
+
+            <div  v-if="active === 1">
+                 <div class="row2"   >
+                    <ul>
+                        <li v-for="(item,index) in list" v-if="item.status==='已完成'">
+                                <div class="content_left">
+                            <span class="green">{{item.status}}</span>
+                            <span>{{item.content}}</span>
+                        </div>
+                        <div class="content_right">   
+
+                            <span class="one"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></span>
+                            <span class=" one " @click="handleDelete"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></span>
+                        </div>                        
+                        </li>
+                    </ul>
+                </div>
+                <div class=" row3">
+                    <p>共{{s}}项任务</p>
+                </div>
+            </div>
+
+            
+            <div  v-if="active === 2">
+                <div class="row2" >
+                    <ul>
+                        <li v-for="(item,index) in list" v-if="item.status==='未完成'">
+                                <div class="content_left">
+
+                            <span>{{item.status}}</span>
+                            <span>{{item.content}}</span>
+                        </div>
+                        <div class="content_right">   
+                            <span class="one"><i class="fa fa-ban fa-2x" aria-hidden="true"></i></span>
+                            <span class=" one " @click="handleDelete"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></span>
+                        </div>
+
+                        </li>
+                    </ul>
+                </div>
+                <div class=" row3">
+                    <p>共{{l}}项任务</p>
+                </div>
+            </div>
+           
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
